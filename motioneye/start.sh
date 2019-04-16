@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# For PiCamera if attached
-modprobe bcm2835-v4l2
+modprobe v4l2_common || true
 
 # Copy default configuration if doesn't exists
 CONFIG=/etc/motioneye/motioneye.conf

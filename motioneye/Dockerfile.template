@@ -1,0 +1,20 @@
+FROM resin/%%RESIN_MACHINE_NAME%%-debian:stretch
+
+RUN apt-get -q update && \
+    apt-get -q -y upgrade
+RUN apt-get -q -y install \
+    motion \
+    build-essential \
+    python-pip python-dev python-setuptools curl libssl-dev libcurl4-openssl-dev libjpeg-dev libx264-148 libavcodec57 libavformat57 default-libmysqlclient-dev libswscale4 \
+    curl kmod ffmpeg v4l-utils zlib1g-dev nano libnss-mdns
+    
+RUN pip2 install motioneye
+
+# RUN apt-get --quiet --yes clean && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin && \
+
+# RUN sed -i 's/.*enable-dbus=.*/enable-dbus=no/' /etc/avahi/avahi-daemon.conf
+
+COPY motioneye.conf.sample /usr/share/motioneye/extra/
+COPY start.sh ./
+
+CMD ["bash", "start.sh"]
